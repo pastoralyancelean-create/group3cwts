@@ -5,40 +5,261 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Busog na Bata, Masiglang Pamayanan — Presentation</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#ffb86b;--muted:#cbd5e1}
+    :root{
+      --primary:#1e3a8a;
+      --secondary:#3b82f6;
+      --accent:#fbbf24;
+      --success:#10b981;
+      --bg-dark:#0f172a;
+      --bg-card:#1e293b;
+      --text-light:#f1f5f9;
+      --text-muted:#cbd5e1;
+    }
     html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
-    body{background:linear-gradient(180deg,#071024 0%, #0b1530 100%);color:var(--muted);display:flex;align-items:center;justify-content:center;padding:20px}
-    .deck{width:100%;max-width:1200px;height:85vh;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 40px rgba(2,6,23,.7);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06))}
-    .slides{display:flex;transition:transform .45s cubic-bezier(.2,.9,.2,1);height:100%}
-    .slide{min-width:100%;padding:48px;box-sizing:border-box;display:flex;gap:32px;align-items:center;overflow-y:auto}
-    .content{flex:1;min-width:0}
-    h1,h2{margin:0 0 16px 0;color:#fff;line-height:1.1}
-    h1{font-size:clamp(32px,4vw,48px);font-weight:700}
-    h2{font-size:clamp(24px,3vw,36px);color:var(--accent);font-weight:600}
-    p{font-size:clamp(16px,1.8vw,20px);line-height:1.6;margin:0 0 14px 0}
-    li{font-size:clamp(16px,1.8vw,20px);line-height:1.5;margin:0 0 10px 0}
-    ul{padding-left:24px;margin:12px 0}
-    .photo{width:42%;min-width:320px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,.6);flex-shrink:0}
+    body{
+      background:linear-gradient(135deg,#0f172a 0%, #1e293b 50%, #334155 100%);
+      color:var(--text-light);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      position:relative;
+      overflow:hidden;
+    }
+    body::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(251,191,36,0.1)"/></svg>');
+      opacity:0.3;
+      pointer-events:none;
+    }
+    .deck{
+      width:100%;
+      max-width:1200px;
+      height:85vh;
+      position:relative;
+      overflow:hidden;
+      border-radius:20px;
+      box-shadow:0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.1);
+      background:linear-gradient(135deg, rgba(30,58,138,0.3), rgba(15,23,42,0.8));
+      backdrop-filter:blur(10px);
+    }
+    .slides{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);height:100%}
+    .slide{
+      min-width:100%;
+      padding:48px;
+      box-sizing:border-box;
+      display:flex;
+      gap:40px;
+      align-items:center;
+      overflow-y:auto;
+      background:linear-gradient(135deg, rgba(30,58,138,0.05), transparent);
+    }
+    .content{flex:1;min-width:0;animation:fadeIn .6s ease-out}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    h1,h2{margin:0 0 20px 0;color:#fff;line-height:1.1;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+    h1{
+      font-size:clamp(36px,4.5vw,56px);
+      font-weight:800;
+      background:linear-gradient(135deg, #fbbf24, #f59e0b);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    h2{
+      font-size:clamp(26px,3.2vw,40px);
+      color:var(--accent);
+      font-weight:700;
+      border-left:4px solid var(--accent);
+      padding-left:16px;
+    }
+    p{font-size:clamp(16px,1.8vw,20px);line-height:1.7;margin:0 0 16px 0;color:var(--text-muted)}
+    li{font-size:clamp(16px,1.8vw,20px);line-height:1.6;margin:0 0 12px 0;color:var(--text-muted)}
+    ul{padding-left:28px;margin:16px 0}
+    .photo{
+      width:45%;
+      min-width:340px;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 10px 40px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.1);
+      flex-shrink:0;
+      position:relative;
+      transition:transform .3s ease;
+    }
+    .photo:hover{transform:scale(1.02)}
+    .photo::after{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background:linear-gradient(180deg, transparent 60%, rgba(0,0,0,.3));
+      pointer-events:none;
+    }
     .photo img{width:100%;height:100%;object-fit:cover;display:block}
-    .controls{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:12px;z-index:10}
-    .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer;font-size:16px}
-    .nav{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 12px;box-sizing:border-box;z-index:10}
-    .nav .arrow{background:rgba(0,0,0,.6);border-radius:999px;padding:12px 16px;backdrop-filter:blur(4px);cursor:pointer;color:#fff;font-size:20px;border:1px solid rgba(255,255,255,.1)}
-    .nav .arrow:hover{background:rgba(0,0,0,.8)}
-    .dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:600px}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12);cursor:pointer}
-    .dot.active{background:var(--accent)}
-    .meta{font-size:clamp(14px,1.6vw,18px);color:rgba(255,255,255,.65);margin-top:8px;font-style:italic}
-    strong{color:#fff;font-weight:600}
-    .letter-header{color:var(--accent);font-size:clamp(14px,1.6vw,18px);margin-bottom:8px}
-    /* responsive */
+    .controls{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:20px;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      z-index:10;
+    }
+    .nav{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      padding:0 20px;
+      box-sizing:border-box;
+      z-index:10;
+    }
+    .nav .arrow{
+      background:rgba(30,58,138,.8);
+      border-radius:50%;
+      width:50px;
+      height:50px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter:blur(10px);
+      cursor:pointer;
+      color:#fff;
+      font-size:22px;
+      border:2px solid rgba(251,191,36,.3);
+      transition:all .3s ease;
+      box-shadow:0 4px 15px rgba(0,0,0,.3);
+    }
+    .nav .arrow:hover{
+      background:rgba(59,130,246,.9);
+      border-color:var(--accent);
+      transform:scale(1.1);
+    }
+    .dots{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:700px}
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      background:rgba(255,255,255,.2);
+      cursor:pointer;
+      transition:all .3s ease;
+      border:2px solid transparent;
+    }
+    .dot:hover{background:rgba(255,255,255,.4)}
+    .dot.active{
+      background:var(--accent);
+      border-color:var(--accent);
+      box-shadow:0 0 10px var(--accent);
+    }
+    .meta{
+      font-size:clamp(14px,1.6vw,18px);
+      color:rgba(251,191,36,.8);
+      margin-top:12px;
+      font-style:italic;
+    }
+    strong{color:#fff;font-weight:700}
+    .letter-header{color:var(--accent);font-size:clamp(16px,1.8vw,20px);margin-bottom:12px;font-weight:600}
+    
+    /* Contact Form Styles */
+    .contact-form{
+      max-width:600px;
+      margin:0 auto;
+      background:rgba(30,58,138,.2);
+      padding:32px;
+      border-radius:16px;
+      border:1px solid rgba(251,191,36,.2);
+    }
+    .form-group{margin-bottom:20px}
+    .form-group label{
+      display:block;
+      margin-bottom:8px;
+      color:var(--accent);
+      font-weight:600;
+      font-size:16px;
+    }
+    .form-group input,
+    .form-group textarea{
+      width:100%;
+      padding:12px 16px;
+      border-radius:8px;
+      border:2px solid rgba(251,191,36,.3);
+      background:rgba(15,23,42,.6);
+      color:#fff;
+      font-size:16px;
+      font-family:inherit;
+      transition:all .3s ease;
+      box-sizing:border-box;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px rgba(251,191,36,.1);
+    }
+    .form-group textarea{
+      resize:vertical;
+      min-height:120px;
+    }
+    .submit-btn{
+      width:100%;
+      padding:14px 24px;
+      background:linear-gradient(135deg, #fbbf24, #f59e0b);
+      color:#0f172a;
+      border:none;
+      border-radius:8px;
+      font-size:18px;
+      font-weight:700;
+      cursor:pointer;
+      transition:all .3s ease;
+      box-shadow:0 4px 15px rgba(251,191,36,.3);
+    }
+    .submit-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(251,191,36,.4);
+    }
+    .submit-btn:active{transform:translateY(0)}
+    .form-message{
+      margin-top:16px;
+      padding:12px;
+      border-radius:8px;
+      text-align:center;
+      font-weight:600;
+      display:none;
+    }
+    .form-message.success{
+      background:rgba(16,185,129,.2);
+      border:1px solid var(--success);
+      color:var(--success);
+      display:block;
+    }
+    .form-message.error{
+      background:rgba(239,68,68,.2);
+      border:1px solid #ef4444;
+      color:#ef4444;
+      display:block;
+    }
+    
+    /* Responsive */
     @media (max-width:900px){
       .slide{flex-direction:column;padding:32px 24px}
       .photo{width:100%;min-width:0;max-height:300px}
       .content{max-height:none}
+      .contact-form{padding:24px}
     }
-    /* accessibility */
+    
+    /* Accessibility */
     .sr-only{position:absolute;left:-10000px}
   </style>
 </head>
@@ -55,7 +276,7 @@
           <p style="margin-top:18px;">Presented by: <strong>Khim Joethel Zaulda</strong> & NutriBo Team</p>
         </div>
         <div class="photo">
-          <img alt="Indigenous children receiving nutritious meals in community feeding program" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" />
+          <img alt="Indigenous children receiving nutritious meals in community feeding program" src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&q=80" />
         </div>
       </section>
 
@@ -81,7 +302,7 @@
           <p>By empowering families with knowledge and practical strategies, the program aims to promote sustainable health practices within the community.</p>
         </div>
         <div class="photo">
-          <img alt="Nutrition education and healthy food" src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&q=80" />
+          <img alt="Nutrition education and healthy food" src="https://images.unsplash.com/photo-1576867757603-05b134ebc379?w=800&q=80" />
         </div>
       </section>
 
@@ -93,7 +314,7 @@
           <p>The initiative emphasizes inclusivity, cultural respect, and community participation to ensure that the program effectively responds to the needs of the Indigenous population it serves.</p>
         </div>
         <div class="photo">
-          <img alt="Community collaboration and volunteers" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80" />
+          <img alt="Community collaboration and volunteers" src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80" />
         </div>
       </section>
 
@@ -104,7 +325,7 @@
           <p>The goal of Busog na Bata, Masiglang Pamayanan: Feeding Program para sa Kabataang Katutubo is to help reduce malnutrition among Indigenous Peoples (IP) children by providing nutritious meals and promoting awareness about proper nutrition, contributing to healthier and more active children in the community.</p>
         </div>
         <div class="photo">
-          <img alt="Healthy and active children" src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&q=80" />
+          <img alt="Healthy and active children" src="https://images.unsplash.com/photo-1587616211892-f83b26a3b6c9?w=800&q=80" />
         </div>
       </section>
 
@@ -121,7 +342,7 @@
           </ul>
         </div>
         <div class="photo">
-          <img alt="Children eating nutritious meals" src="https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=800&q=80" />
+          <img alt="Children eating nutritious meals" src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80" />
         </div>
       </section>
 
@@ -152,7 +373,7 @@
           </ul>
         </div>
         <div class="photo">
-          <img alt="Volunteers working together" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80" />
+          <img alt="Volunteers working together" src="https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=800&q=80" />
         </div>
       </section>
 
@@ -171,7 +392,7 @@
           <p class="meta">Sample letters and donation forms on following slides.</p>
         </div>
         <div class="photo">
-          <img alt="Partnership and collaboration" src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=80" />
+          <img alt="Partnership and collaboration" src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80" />
         </div>
       </section>
 
@@ -229,7 +450,7 @@
           <p>Scan the QR code or visit the link to submit your donation pledge.</p>
         </div>
         <div class="photo">
-          <img alt="Online donation form" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" />
+          <img alt="Online donation form" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" />
         </div>
       </section>
 
@@ -247,7 +468,7 @@
           </ul>
         </div>
         <div class="photo">
-          <img alt="Planning and strategy" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" />
+          <img alt="Planning and strategy" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" />
         </div>
       </section>
 
@@ -260,7 +481,7 @@
           <p>The team NutriBo will observe the participation of the children during the feeding activity and check if the meals provided are helpful for their health and energy.</p>
         </div>
         <div class="photo">
-          <img alt="Program evaluation and monitoring" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" />
+          <img alt="Program evaluation and monitoring" src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80" />
         </div>
       </section>
 
@@ -284,7 +505,7 @@
           <p>This project proved that when students, local government units, and private citizens work together, real change is possible even in remote indigenous communities.</p>
         </div>
         <div class="photo">
-          <img alt="Community impact and gratitude" src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80" />
+          <img alt="Community impact and gratitude" src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=800&q=80" />
         </div>
       </section>
 
@@ -307,7 +528,7 @@
           <p>Because of your support, we were able to help improve the children's health, increase their energy, and promote their overall well-being in a simple yet meaningful and open-hearted way.</p>
         </div>
         <div class="photo">
-          <img alt="Gratitude and appreciation" src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&q=80" />
+          <img alt="Gratitude and appreciation" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80" />
         </div>
       </section>
 
@@ -330,7 +551,36 @@
           <p><strong>Thank you for being part of this meaningful project.</strong> Your support has truly made a lasting impact on the community, and we are sincerely grateful for your commitment to helping to build a healthier and brighter future for these children with this simple but has an amazing and good impact.</p>
         </div>
         <div class="photo">
-          <img alt="Happy children and community" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" />
+          <img alt="Happy children and community" src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&q=80" />
+        </div>
+      </section>
+
+      <!-- Slide 22: Contact Us -->
+      <section class="slide">
+        <div class="content">
+          <h2>Contact Us</h2>
+          <p>Have questions or want to support our program? We'd love to hear from you!</p>
+          
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" required placeholder="What is this about?">
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required placeholder="Write your message here..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Send Message</button>
+            
+            <div class="form-message" id="formMessage"></div>
+          </form>
         </div>
       </section>
 
@@ -347,6 +597,21 @@
   </div>
 
   <script>
+    // ============================================
+    // EMAILJS CONFIGURATION
+    // ============================================
+    const EMAILJS_PUBLIC_KEY = 'r-OZq0GDLQ9hb2B51';  // Your Public Key
+    const EMAILJS_SERVICE_ID = 'service_jrpotlg';    // Your Service ID
+    const EMAILJS_TEMPLATE_ID = 'template_iuqcskk';  // Your Template ID
+
+    // Initialize EmailJS
+    (function() {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    })();
+
+    // ============================================
+    // SLIDESHOW FUNCTIONALITY
+    // ============================================
     const slidesEl = document.getElementById('slides');
     const slides = Array.from(document.querySelectorAll('.slide'));
     const dotsEl = document.getElementById('dots');
@@ -407,6 +672,64 @@
       else if(dx<-50 && idx < slides.length - 1) idx++; 
       render(); 
       startX=null;
+    });
+
+    // ============================================
+    // CONTACT FORM WITH EMAILJS
+    // ============================================
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
+    const submitBtn = contactForm.querySelector('.submit-btn');
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Disable submit button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formMessage.style.display = 'none';
+      
+      // Get form values
+      const templateParams = {
+        from_name: document.getElementById('name').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value,
+        to_email: 'pastoralyancelean@gmail.com', // Your email
+        reply_to: document.getElementById('name').value
+      };
+      
+      // Send email using EmailJS
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          
+          // Show success message
+          formMessage.textContent = '✓ Message sent successfully! We will get back to you soon.';
+          formMessage.className = 'form-message success';
+          
+          // Reset form
+          contactForm.reset();
+          
+          // Re-enable button
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+          
+          // Hide message after 5 seconds
+          setTimeout(() => {
+            formMessage.style.display = 'none';
+          }, 5000);
+          
+        }, function(error) {
+          console.log('FAILED...', error);
+          
+          // Show error message
+          formMessage.textContent = '✗ Failed to send message. Please try again or email us directly at pastoralyancelean@gmail.com';
+          formMessage.className = 'form-message error';
+          
+          // Re-enable button
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        });
     });
   </script>
 </body>
