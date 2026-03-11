@@ -8,28 +8,36 @@
   <style>
     :root{--bg:#0f1724;--card:#0b1220;--accent:#ffb86b;--muted:#cbd5e1}
     html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
-    body{background:linear-gradient(180deg,#071024 0%, #0b1530 100%);color:var(--muted);display:flex;align-items:center;justify-content:center}
-    .deck{width:100%;max-width:1200px;height:80vh;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 40px rgba(2,6,23,.7);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06))}
+    body{background:linear-gradient(180deg,#071024 0%, #0b1530 100%);color:var(--muted);display:flex;align-items:center;justify-content:center;padding:20px}
+    .deck{width:100%;max-width:1200px;height:85vh;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 40px rgba(2,6,23,.7);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06))}
     .slides{display:flex;transition:transform .45s cubic-bezier(.2,.9,.2,1);height:100%}
-    .slide{min-width:100%;padding:48px;box-sizing:border-box;display:flex;gap:32px;align-items:center}
+    .slide{min-width:100%;padding:48px;box-sizing:border-box;display:flex;gap:32px;align-items:center;overflow-y:auto}
     .content{flex:1;min-width:0}
-    h1,h2{margin:0 0 12px 0;color:#fff;line-height:1.05}
-    h1{font-size:clamp(36px,4.5vw,56px)}
-    h2{font-size:clamp(28px,3.2vw,40px);color:var(--accent)}
-    p,li{font-size:36px;line-height:1.2;margin:0 0 12px 0}
-    ul{padding-left:20px;margin:0}
-    .photo{width:46%;min-width:360px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,.6)}
+    h1,h2{margin:0 0 16px 0;color:#fff;line-height:1.1}
+    h1{font-size:clamp(32px,4vw,48px);font-weight:700}
+    h2{font-size:clamp(24px,3vw,36px);color:var(--accent);font-weight:600}
+    p{font-size:clamp(16px,1.8vw,20px);line-height:1.6;margin:0 0 14px 0}
+    li{font-size:clamp(16px,1.8vw,20px);line-height:1.5;margin:0 0 10px 0}
+    ul{padding-left:24px;margin:12px 0}
+    .photo{width:42%;min-width:320px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,.6);flex-shrink:0}
     .photo img{width:100%;height:100%;object-fit:cover;display:block}
-    .controls{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:12px}
-    .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer;font-size:18px}
-    .nav{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 12px;box-sizing:border-box}
-    .nav .arrow{background:rgba(0,0,0,.45);border-radius:999px;padding:10px;backdrop-filter:blur(4px);cursor:pointer;color:#fff}
-    .dots{display:flex;gap:8px}
-    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}
+    .controls{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:12px;z-index:10}
+    .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer;font-size:16px}
+    .nav{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 12px;box-sizing:border-box;z-index:10}
+    .nav .arrow{background:rgba(0,0,0,.6);border-radius:999px;padding:12px 16px;backdrop-filter:blur(4px);cursor:pointer;color:#fff;font-size:20px;border:1px solid rgba(255,255,255,.1)}
+    .nav .arrow:hover{background:rgba(0,0,0,.8)}
+    .dots{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:600px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12);cursor:pointer}
     .dot.active{background:var(--accent)}
-    .meta{font-size:20px;color:rgba(255,255,255,.7);margin-top:8px}
+    .meta{font-size:clamp(14px,1.6vw,18px);color:rgba(255,255,255,.65);margin-top:8px;font-style:italic}
+    strong{color:#fff;font-weight:600}
+    .letter-header{color:var(--accent);font-size:clamp(14px,1.6vw,18px);margin-bottom:8px}
     /* responsive */
-    @media (max-width:900px){.slide{flex-direction:column}.photo{width:100%;min-width:0}}
+    @media (max-width:900px){
+      .slide{flex-direction:column;padding:32px 24px}
+      .photo{width:100%;min-width:0;max-height:300px}
+      .content{max-height:none}
+    }
     /* accessibility */
     .sr-only{position:absolute;left:-10000px}
   </style>
@@ -38,186 +46,303 @@
   <div class="deck" role="region" aria-roledescription="carousel" aria-label="Feeding Program Presentation">
     <div id="slides" class="slides">
 
-      <!-- Title slide -->
+      <!-- Slide 1: Title -->
       <section class="slide" aria-label="Title slide">
         <div class="content">
           <h1>Busog na Bata, Masiglang Pamayanan</h1>
           <h2>Feeding Program para sa Kabataang Katutubo</h2>
           <p class="meta">Community-based initiative · Conrazon, Bansud, Oriental Mindoro</p>
-          <p style="margin-top:18px;">Presented by: <strong>Khim Joethel Zaulda</strong> & NutriBo</p>
+          <p style="margin-top:18px;">Presented by: <strong>Khim Joethel Zaulda</strong> & NutriBo Team</p>
         </div>
         <div class="photo">
-          <img alt="Community feeding program" src="https://source.unsplash.com/featured/?children,feeding,community,indigenous" />
+          <img alt="Indigenous children receiving nutritious meals in community feeding program" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Overview (split into two for readability) -->
+      <!-- Slide 2: Overview -->
       <section class="slide">
         <div class="content">
           <h2>Overview</h2>
-          <p>The program is a community-based initiative addressing malnutrition among Indigenous Peoples (IP) children in Conrazon, Bansud.</p>
-          <p>Many IP children face limited access to nutritious food and health support, increasing vulnerability to long-term effects on growth and learning.</p>
+          <p>The program "Busog na Bata, Masiglang Pamayanan: Feeding Program for Kabataang Katutubo" is a community-based initiative designed to address the issue of malnutrition among Indigenous Peoples (IP) children in Conrazon, a community located in Bansud, Oriental Mindoro.</p>
+          <p>Many children in indigenous communities face limited access to nutritious food and proper health support, making them vulnerable to malnutrition and its long-term effects on growth, learning, and overall well-being.</p>
+          <p>This program aims to provide nutritious and balanced meals to Indigenous children in order to improve their nutritional status and support their physical and cognitive development.</p>
+        </div>
+        <div class="photo">
+          <img alt="Indigenous community children" src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80" />
         </div>
       </section>
 
+      <!-- Slide 3: Overview continued -->
       <section class="slide">
         <div class="content">
           <h2>Overview — continued</h2>
-          <p>The program provides nutritious meals to support physical and cognitive development, paired with nutrition education for parents and community members.</p>
-          <p>We emphasize inclusivity, cultural respect, and community participation to ensure the program meets local needs.</p>
+          <p>Through regular feeding activities, the initiative seeks to help children maintain adequate nutrition, increase their energy levels, and promote better participation in school and community activities.</p>
+          <p>In addition to food distribution, the program will also incorporate nutrition education for parents and community members to raise awareness about proper child nutrition, healthy food preparation, and the importance of balanced diets.</p>
+          <p>By empowering families with knowledge and practical strategies, the program aims to promote sustainable health practices within the community.</p>
+        </div>
+        <div class="photo">
+          <img alt="Nutrition education and healthy food" src="https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Goal -->
+      <!-- Slide 4: Overview final -->
+      <section class="slide">
+        <div class="content">
+          <h2>Overview — final</h2>
+          <p>Through collaboration with volunteers, community leaders, and local stakeholders, the program aspires to reduce the prevalence of malnutrition among Indigenous children and contribute to building a healthier, more active, and resilient community.</p>
+          <p>The initiative emphasizes inclusivity, cultural respect, and community participation to ensure that the program effectively responds to the needs of the Indigenous population it serves.</p>
+        </div>
+        <div class="photo">
+          <img alt="Community collaboration and volunteers" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80" />
+        </div>
+      </section>
+
+      <!-- Slide 5: Goal -->
       <section class="slide">
         <div class="content">
           <h2>Goal</h2>
-          <p>To reduce malnutrition among IP children by providing nutritious meals and promoting nutrition awareness, contributing to healthier and more active children.</p>
+          <p>The goal of Busog na Bata, Masiglang Pamayanan: Feeding Program para sa Kabataang Katutubo is to help reduce malnutrition among Indigenous Peoples (IP) children by providing nutritious meals and promoting awareness about proper nutrition, contributing to healthier and more active children in the community.</p>
+        </div>
+        <div class="photo">
+          <img alt="Healthy and active children" src="https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Objectives -->
+      <!-- Slide 6: Objectives -->
       <section class="slide">
         <div class="content">
           <h2>Objectives</h2>
           <ul>
-            <li>Provide nutritious meals to IP children at risk of malnutrition.</li>
-            <li>Improve health and energy through regular balanced intake.</li>
-            <li>Educate children and parents about proper nutrition.</li>
+            <li>To provide nutritious meals to IP children who are experiencing or at risk of malnutrition.</li>
+            <li>To improve the health and energy levels of the children through regular and balanced food intake during the feeding activity.</li>
+            <li>To educate children and parents about the importance of proper nutrition and healthy eating habits.</li>
+            <li>To encourage community participation among students, teachers, and local leaders in addressing child malnutrition.</li>
+            <li>To promote compassion, volunteerism, and social responsibility among student volunteers through community service.</li>
           </ul>
+        </div>
+        <div class="photo">
+          <img alt="Children eating nutritious meals" src="https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=800&q=80" />
         </div>
       </section>
 
-      <section class="slide">
-        <div class="content">
-          <h2>Objectives — continued</h2>
-          <ul>
-            <li>Encourage community participation from students, teachers, and leaders.</li>
-            <li>Promote compassion, volunteerism, and social responsibility among volunteers.</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Team -->
+      <!-- Slide 7: Team Introduction -->
       <section class="slide">
         <div class="content">
           <h2>Introduction of the Team</h2>
-          <p>Driven by teamwork and compassion, our team launched this feeding program to support those in need.</p>
+          <p>Driven by teamwork and compassion, our team launched this feeding program to support those in need. Every member played a vital role in turning our shared vision into a successful community initiative.</p>
           <ul>
-            <li>Team Leader – Khim Zaulda</li>
-            <li>Assistant Leader – Cristine Mendoza</li>
-            <li>Secretary – Hana Yorie Patimo</li>
-            <li>Treasurer – Eunice Santos</li>
+            <li><strong>Team Leader – Khim Zaulda:</strong> Leads the team, oversees the entire program, and ensures that all activities are properly organized and completed.</li>
+            <li><strong>Assistant Leader – Cristine Mendoza:</strong> Assists the team leader in managing the team and helps coordinate tasks to ensure the program runs smoothly.</li>
+            <li><strong>Secretary – Hana Yorie Patimo:</strong> Responsible for recording important information, preparing documents, and keeping track of the team's plans and meetings.</li>
           </ul>
+        </div>
+        <div class="photo">
+          <img alt="Team collaboration and planning" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" />
         </div>
       </section>
 
+      <!-- Slide 8: Team continued -->
       <section class="slide">
         <div class="content">
           <h2>Team — continued</h2>
           <ul>
-            <li>Logistics Coordinators – Heartlaine Reig, Kailah Alford, Precious Rona</li>
-            <li>Members – Ej Velasquez, Yance Lean Pastoral, Francisco Fonte III, Ericka Gayutao</li>
+            <li><strong>Treasurer – Eunice Santos:</strong> Manages the budget, records expenses, and ensures that funds for the program are properly handled.</li>
+            <li><strong>Logistics Coordinators – Heartlaine Reig, Kailah Alford, Precious Rona:</strong> Organizes and prepares the materials, supplies, and equipment needed for the feeding program.</li>
+            <li><strong>Members – Ej Velasquez, Yance Lean Pastoral, Francisco Fonte III, Ericka Gayutao:</strong> Support the team by helping in planning, preparation, and distribution during the program.</li>
           </ul>
+        </div>
+        <div class="photo">
+          <img alt="Volunteers working together" src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Sourcing Partners / Letters -->
+      <!-- Slide 9: Sourcing Partners -->
       <section class="slide">
         <div class="content">
           <h2>Sourcing Partners / Donorship</h2>
-          <p>We reach out to the Municipal Mayor, Barangay, DSWD/LGU, and potential sponsors for food and financial support.</p>
-          <p class="meta">Sample letters included on following slides.</p>
+          <p>We reach out to various stakeholders for support and partnership:</p>
+          <ul>
+            <li>Municipal Mayor's Office</li>
+            <li>Barangay Conrazon</li>
+            <li>Department of Social Welfare and Development (DSWD)</li>
+            <li>Local Government Unit (LGU)</li>
+            <li>Private sponsors and donors</li>
+          </ul>
+          <p class="meta">Sample letters and donation forms on following slides.</p>
+        </div>
+        <div class="photo">
+          <img alt="Partnership and collaboration" src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=80" />
         </div>
       </section>
 
+      <!-- Slide 10: Letter to Mayor -->
       <section class="slide">
         <div class="content">
-          <h2>Letter — Mayor, Bansud</h2>
-          <p>Date: [Insert Date]</p>
-          <p>Hon. Ronaldo M. Morada<br/>Municipal Mayor, Bansud, Oriental Mindoro</p>
+          <h2 class="letter-header">Letter for Bansud Mayor's Office</h2>
+          <p><strong>Date:</strong> March 30, 2026</p>
+          <p><strong>Hon. Ronaldo M. Morada</strong><br/>Municipal Mayor<br/>Bansud, Oriental Mindoro</p>
           <p>Dear Honorable Mayor,</p>
-          <p>We respectfully request your support for our Feeding Program. Assistance may include rice, canned goods, or financial support. Thank you for your consideration.</p>
-          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President, NutriBo Organization<br/>09639946724</p>
+          <p>Good day! We would like to respectfully request your support and partnership for our upcoming Feeding Program, which aims to provide nutritious meals to children and families in our community.</p>
+          <p>We humbly ask for your assistance, which may come in the form of food supplies such as rice, canned goods, or any financial support that can help make this program successful.</p>
+          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President of NutriBo Organization<br/>09639946724</p>
         </div>
       </section>
 
+      <!-- Slide 11: Letter to Barangay/DSWD -->
       <section class="slide">
         <div class="content">
-          <h2>Letter — Barangay / DSWD / LGU</h2>
-          <p>Date: [Insert Date]</p>
-          <p>To: The Office of the Department of Social Welfare and Development / Local Government Unit, Conrazon</p>
-          <p>We request partnership/donation for our Feeding Program. We ask for food supplies, financial support, or other resources to help make this program successful.</p>
-          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President, NutriBo Organization<br/>09639946724<br/>khimzaulda@gmail.com</p>
+          <h2 class="letter-header">Letter for Barangay Conrazon</h2>
+          <p><strong>Date:</strong> March 30, 2026</p>
+          <p><strong>To:</strong> The Office of the Department of Social Welfare and Development / Local Government Unit (LGU)<br/>Conrazon, Bansud, Oriental Mindoro</p>
+          <p><strong>Subject:</strong> Request for Partnership/Donation for Feeding Program</p>
+          <p>Good day! We would like to respectfully request your support and partnership for our upcoming Feeding Program that aims to help provide nutritious meals to children and families in our community.</p>
+          <p>We humbly ask for any assistance your office may provide, such as food supplies (rice, canned goods, vegetables), financial support, or other resources.</p>
+          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President of NutriBo Organization<br/>09639946724<br/>khimzaulda@gmail.com</p>
         </div>
       </section>
 
+      <!-- Slide 12: Letter for Sponsorship -->
       <section class="slide">
         <div class="content">
-          <h2>Letter — Sponsorship</h2>
-          <p>Date: [Insert Date]</p>
-          <p>Dear Sir/Ma’am,</p>
-          <p>We request your kind support for our Feeding Program. Any assistance such as food supplies or financial support will be greatly appreciated.</p>
-          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President, NutriBo Organization<br/>09639946724</p>
+          <h2 class="letter-header">Letter for Sponsorship</h2>
+          <p><strong>Date:</strong> March 30, 2026</p>
+          <p>Dear Sir/Ma'am,</p>
+          <p>Greetings! We are currently organizing a Feeding Program for children and families in our community who are in need of proper nutrition and support. The goal of this program is to provide healthy meals and promote care and compassion within the community.</p>
+          <p>We would like to humbly ask for your kind support and partnership in making this activity successful. Any form of assistance such as food supplies (rice, canned goods, vegetables), financial support, or other resources will be greatly appreciated.</p>
+          <p>Your generosity and willingness to help will make a big difference in the lives of those who need it most.</p>
+          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President of NutriBo Organization<br/>09639946724</p>
         </div>
       </section>
 
+      <!-- Slide 13: Google Form for Donors -->
       <section class="slide">
         <div class="content">
-          <h2>GForm for Donors</h2>
-          <p>Create a Google Form link for donors and paste it here:</p>
-          <p class="meta">[Insert Google Form URL]</p>
+          <h2>Donation Form</h2>
+          <p>We have created a Google Form for donors who wish to contribute to our feeding program.</p>
+          <p>The form allows donors to:</p>
+          <ul>
+            <li>Indicate their type of donation (food supplies, financial, or other resources)</li>
+            <li>Provide contact information</li>
+            <li>Specify delivery or coordination details</li>
+          </ul>
+          <p class="meta">Google Form Link: <strong>[Insert Google Form URL here]</strong></p>
+          <p>Scan the QR code or visit the link to submit your donation pledge.</p>
+        </div>
+        <div class="photo">
+          <img alt="Online donation form" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Action Plan -->
+      <!-- Slide 14: Action Plan -->
       <section class="slide">
         <div class="content">
           <h2>Action Plan</h2>
           <ul>
-            <li>Needs assessment with community leaders</li>
-            <li>Secure donations and partners</li>
-            <li>Procure supplies and organize logistics</li>
-            <li>Conduct feeding sessions and education</li>
-            <li>Collect feedback and evaluate impact</li>
+            <li><strong>Phase 1:</strong> Needs assessment with community leaders and identification of beneficiaries</li>
+            <li><strong>Phase 2:</strong> Secure donations and partnerships with local government and private sponsors</li>
+            <li><strong>Phase 3:</strong> Procure food supplies and organize logistics for distribution</li>
+            <li><strong>Phase 4:</strong> Conduct feeding sessions and nutrition education activities</li>
+            <li><strong>Phase 5:</strong> Collect feedback from beneficiaries and stakeholders</li>
+            <li><strong>Phase 6:</strong> Evaluate program impact and document lessons learned</li>
           </ul>
+        </div>
+        <div class="photo">
+          <img alt="Planning and strategy" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Project Evaluation -->
+      <!-- Slide 15: Project Evaluation -->
       <section class="slide">
         <div class="content">
           <h2>Project Evaluation</h2>
-          <p>Evaluation will focus on nutritional impact, participation, feedback from stakeholders, and organizational effectiveness to improve future programs.</p>
+          <p>The project "Busog na Bata, Masiglang Pamayanan: Feeding Program para sa Kabataang Katutubo" will be evaluated based on how well it helps Indigenous Peoples (IP) children in Conrazon, Bansud, Oriental Mindoro.</p>
+          <p>The evaluation will focus on whether the program is able to provide nutritious food and raise awareness about proper nutrition among children and their parents.</p>
+          <p>The team NutriBo will observe the participation of the children during the feeding activity and check if the meals provided are helpful for their health and energy.</p>
+        </div>
+        <div class="photo">
+          <img alt="Program evaluation and monitoring" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Final Narrative -->
+      <!-- Slide 16: Project Evaluation continued -->
+      <section class="slide">
+        <div class="content">
+          <h2>Project Evaluation — continued</h2>
+          <p>Feedback from the children, parents, volunteers, and community leaders will also be collected to know their opinions and suggestions about the program.</p>
+          <p>The evaluation will also look at how well the activity was organized, including teamwork, coordination with the community, and support from donors and volunteers.</p>
+          <p>Any challenges that may happen during the program will be recorded so that the team can improve future activities.</p>
+          <p>Overall, the evaluation will help the team understand the impact of the feeding program and guide them in improving future programs for Indigenous children in the community.</p>
+        </div>
+      </section>
+
+      <!-- Slide 17: Final Narrative Report -->
       <section class="slide">
         <div class="content">
           <h2>Final Narrative Report / Self Analysis</h2>
-          <p>Summarize activities, outcomes, lessons learned, and recommendations for future iterations of the program.</p>
+          <p>As a team, we realized that community service is not just about distributing food—it is about building trust and relationships. The smiles on the children's faces and the tears of gratitude from some mothers reminded us why we chose this project.</p>
+          <p>Individually, we grew: Khim learned leadership under pressure, Eunice became more confident in financial management, and the rest of us discovered that even small contributions (washing dishes, playing with kids, or simply listening) can create lasting impact.</p>
+          <p>This project proved that when students, local government units, and private citizens work together, real change is possible even in remote indigenous communities.</p>
+        </div>
+        <div class="photo">
+          <img alt="Community impact and gratitude" src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=80" />
         </div>
       </section>
 
-      <!-- Appreciation -->
+      <!-- Slide 18: Self Analysis continued -->
+      <section class="slide">
+        <div class="content">
+          <h2>Self Analysis — continued</h2>
+          <p>The experience strengthened our belief that addressing malnutrition is not only a health issue but also a matter of dignity, equity, and love for the next generation.</p>
+          <p>We are proud of what we accomplished, but we also recognize that one day of feeding is only the beginning. Sustainable change requires continued partnership with the barangay, regular monitoring of the children's nutritional status, and more programs like this in the future.</p>
+          <p>The "Busog na Bata, Masiglang Pamayanan" feeding program may have ended, but the lessons, friendships, and sense of purpose it gave us will remain. We, the NutriBo team, commit to carry this spirit of service into our future endeavors and hope that other students will be inspired to do the same.</p>
+        </div>
+      </section>
+
+      <!-- Slide 19: Appreciation of Donors -->
       <section class="slide">
         <div class="content">
           <h2>Appreciation of Donors</h2>
-          <p>We express sincere gratitude to all donors whose generosity helped provide nutritious meals and raise awareness about child nutrition in the community.</p>
-          <p class="meta">Thank you for helping build a healthier and brighter future.</p>
+          <p>We would like to express our sincere gratitude to all the generous donors who supported the "NutriBo" Feeding Program para sa Kabataang Katutubo.</p>
+          <p>Your kindness and generosity made it possible to provide nutritious meals to Indigenous Peoples (IP) children who are experiencing the lack of malnutrition or are at risk of becoming malnourished.</p>
+          <p>Because of your support, we were able to help improve the children's health, increase their energy, and promote their overall well-being in a simple yet meaningful and open-hearted way.</p>
+        </div>
+        <div class="photo">
+          <img alt="Gratitude and appreciation" src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&q=80" />
+        </div>
+      </section>
+
+      <!-- Slide 20: Appreciation continued -->
+      <section class="slide">
+        <div class="content">
+          <h2>Appreciation — continued</h2>
+          <p>Your valuable contributions also helped raise awareness among children and their parents about the importance of proper nutrition and maintaining healthy eating habits.</p>
+          <p>Through this program, families were encouraged to understand the role of balanced meals in the growth and eating healthy foods like vegetables, fruits etc. In addition, this program served as an opportunity to educate or guide the community about the long-term benefits of having good nutrition for the healthier body.</p>
+          <p>Also, your support makes unity, cooperation, and compassion among students, teachers, and community members who worked together to address the issue of child malnutrition.</p>
+        </div>
+      </section>
+
+      <!-- Slide 21: Final Thanks -->
+      <section class="slide">
+        <div class="content">
+          <h2>Thank You</h2>
+          <p>The feeding program titled "NutriBo" not only provided food but also strengthened the spirit of collaboration and care within the people in the community.</p>
+          <p>We deeply appreciate your willingness to help us make a meaningful difference in the lives of these children. Your generosity has brought hope, nourishment, and smiles to many families, especially to the children who greatly benefited from this initiative program.</p>
+          <p><strong>Thank you for being part of this meaningful project.</strong> Your support has truly made a lasting impact on the community, and we are sincerely grateful for your commitment to helping to build a healthier and brighter future for these children with this simple but has an amazing and good impact.</p>
+        </div>
+        <div class="photo">
+          <img alt="Happy children and community" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80" />
         </div>
       </section>
 
     </div>
 
     <div class="nav" aria-hidden="false">
-      <div class="arrow prev" id="prev" tabindex="0">◀</div>
-      <div class="arrow next" id="next" tabindex="0">▶</div>
+      <div class="arrow prev" id="prev" tabindex="0" aria-label="Previous slide">◀</div>
+      <div class="arrow next" id="next" tabindex="0" aria-label="Next slide">▶</div>
     </div>
 
     <div class="controls">
-      <div class="dots" id="dots"></div>
+      <div class="dots" id="dots" role="tablist" aria-label="Slide navigation"></div>
     </div>
   </div>
 
@@ -231,33 +356,58 @@
       slidesEl.style.transform = `translateX(${ -idx * 100 }%)`;
       Array.from(dotsEl.children).forEach((d,i)=>d.classList.toggle('active', i===idx));
       location.hash = `slide-${idx+1}`;
+      
+      // Update aria-label for screen readers
+      document.querySelector('.deck').setAttribute('aria-label', `Slide ${idx+1} of ${slides.length}`);
     }
 
     function makeDots(){
       slides.forEach((s,i)=>{
-        const d = document.createElement('div');d.className='dot';d.setAttribute('aria-label',`Go to slide ${i+1}`);
+        const d = document.createElement('div');
+        d.className='dot';
+        d.setAttribute('role', 'tab');
+        d.setAttribute('aria-label',`Go to slide ${i+1}`);
+        d.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
         d.addEventListener('click',()=>{idx=i;render()});
         dotsEl.appendChild(d);
       });
     }
 
-    document.getElementById('prev').addEventListener('click',()=>{idx = Math.max(0, idx-1);render()});
-    document.getElementById('next').addEventListener('click',()=>{idx = Math.min(slides.length-1, idx+1);render()});
+    document.getElementById('prev').addEventListener('click',()=>{
+      if(idx > 0) {idx--; render();}
+    });
+    
+    document.getElementById('next').addEventListener('click',()=>{
+      if(idx < slides.length - 1) {idx++; render();}
+    });
+    
     document.addEventListener('keydown', e=>{
-      if(e.key==='ArrowRight') idx = Math.min(slides.length-1, idx+1);
-      if(e.key==='ArrowLeft') idx = Math.max(0, idx-1);
+      if(e.key==='ArrowRight' && idx < slides.length - 1) idx++;
+      if(e.key==='ArrowLeft' && idx > 0) idx--;
       render();
     });
 
-    // initialize from hash if present
+    // Initialize from hash if present
     const h = location.hash.match(/slide-(\d+)/);
-    if(h){ const n = parseInt(h[1],10)-1; if(n>=0 && n<slides.length) idx = n }
-    makeDots(); render();
+    if(h){ 
+      const n = parseInt(h[1],10)-1; 
+      if(n>=0 && n<slides.length) idx = n;
+    }
+    
+    makeDots(); 
+    render();
 
-    // touch support
+    // Touch support for mobile
     let startX=null;
     slidesEl.addEventListener('touchstart',e=>startX = e.changedTouches[0].clientX);
-    slidesEl.addEventListener('touchend',e=>{ if(startX===null) return; const dx = e.changedTouches[0].clientX - startX; if(dx>40) idx=Math.max(0,idx-1); else if(dx<-40) idx=Math.min(slides.length-1,idx+1); render(); startX=null });
+    slidesEl.addEventListener('touchend',e=>{ 
+      if(startX===null) return; 
+      const dx = e.changedTouches[0].clientX - startX; 
+      if(dx>50 && idx > 0) idx--; 
+      else if(dx<-50 && idx < slides.length - 1) idx++; 
+      render(); 
+      startX=null;
+    });
   </script>
 </body>
 </html>
