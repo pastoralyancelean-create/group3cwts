@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Busog na Bata, Masiglang Pamayanan — Presentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#ffb86b;--muted:#cbd5e1}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#071024 0%, #0b1530 100%);color:var(--muted);display:flex;align-items:center;justify-content:center}
+    .deck{width:100%;max-width:1200px;height:80vh;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 40px rgba(2,6,23,.7);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06))}
+    .slides{display:flex;transition:transform .45s cubic-bezier(.2,.9,.2,1);height:100%}
+    .slide{min-width:100%;padding:48px;box-sizing:border-box;display:flex;gap:32px;align-items:center}
+    .content{flex:1;min-width:0}
+    h1,h2{margin:0 0 12px 0;color:#fff;line-height:1.05}
+    h1{font-size:clamp(36px,4.5vw,56px)}
+    h2{font-size:clamp(28px,3.2vw,40px);color:var(--accent)}
+    p,li{font-size:36px;line-height:1.2;margin:0 0 12px 0}
+    ul{padding-left:20px;margin:0}
+    .photo{width:46%;min-width:360px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,.6)}
+    .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .controls{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:12px}
+    .btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer;font-size:18px}
+    .nav{position:absolute;top:50%;transform:translateY(-50%);width:100%;display:flex;justify-content:space-between;padding:0 12px;box-sizing:border-box}
+    .nav .arrow{background:rgba(0,0,0,.45);border-radius:999px;padding:10px;backdrop-filter:blur(4px);cursor:pointer;color:#fff}
+    .dots{display:flex;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12)}
+    .dot.active{background:var(--accent)}
+    .meta{font-size:20px;color:rgba(255,255,255,.7);margin-top:8px}
+    /* responsive */
+    @media (max-width:900px){.slide{flex-direction:column}.photo{width:100%;min-width:0}}
+    /* accessibility */
+    .sr-only{position:absolute;left:-10000px}
+  </style>
+</head>
+<body>
+  <div class="deck" role="region" aria-roledescription="carousel" aria-label="Feeding Program Presentation">
+    <div id="slides" class="slides">
+
+      <!-- Title slide -->
+      <section class="slide" aria-label="Title slide">
+        <div class="content">
+          <h1>Busog na Bata, Masiglang Pamayanan</h1>
+          <h2>Feeding Program para sa Kabataang Katutubo</h2>
+          <p class="meta">Community-based initiative · Conrazon, Bansud, Oriental Mindoro</p>
+          <p style="margin-top:18px;">Presented by: <strong>Khim Joethel Zaulda</strong> & NutriBo</p>
+        </div>
+        <div class="photo">
+          <img alt="Community feeding program" src="https://source.unsplash.com/featured/?children,feeding,community,indigenous" />
+        </div>
+      </section>
+
+      <!-- Overview (split into two for readability) -->
+      <section class="slide">
+        <div class="content">
+          <h2>Overview</h2>
+          <p>The program is a community-based initiative addressing malnutrition among Indigenous Peoples (IP) children in Conrazon, Bansud.</p>
+          <p>Many IP children face limited access to nutritious food and health support, increasing vulnerability to long-term effects on growth and learning.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="content">
+          <h2>Overview — continued</h2>
+          <p>The program provides nutritious meals to support physical and cognitive development, paired with nutrition education for parents and community members.</p>
+          <p>We emphasize inclusivity, cultural respect, and community participation to ensure the program meets local needs.</p>
+        </div>
+      </section>
+
+      <!-- Goal -->
+      <section class="slide">
+        <div class="content">
+          <h2>Goal</h2>
+          <p>To reduce malnutrition among IP children by providing nutritious meals and promoting nutrition awareness, contributing to healthier and more active children.</p>
+        </div>
+      </section>
+
+      <!-- Objectives -->
+      <section class="slide">
+        <div class="content">
+          <h2>Objectives</h2>
+          <ul>
+            <li>Provide nutritious meals to IP children at risk of malnutrition.</li>
+            <li>Improve health and energy through regular balanced intake.</li>
+            <li>Educate children and parents about proper nutrition.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="content">
+          <h2>Objectives — continued</h2>
+          <ul>
+            <li>Encourage community participation from students, teachers, and leaders.</li>
+            <li>Promote compassion, volunteerism, and social responsibility among volunteers.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Team -->
+      <section class="slide">
+        <div class="content">
+          <h2>Introduction of the Team</h2>
+          <p>Driven by teamwork and compassion, our team launched this feeding program to support those in need.</p>
+          <ul>
+            <li>Team Leader – Khim Zaulda</li>
+            <li>Assistant Leader – Cristine Mendoza</li>
+            <li>Secretary – Hana Yorie Patimo</li>
+            <li>Treasurer – Eunice Santos</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="content">
+          <h2>Team — continued</h2>
+          <ul>
+            <li>Logistics Coordinators – Heartlaine Reig, Kailah Alford, Precious Rona</li>
+            <li>Members – Ej Velasquez, Yance Lean Pastoral, Francisco Fonte III, Ericka Gayutao</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Sourcing Partners / Letters -->
+      <section class="slide">
+        <div class="content">
+          <h2>Sourcing Partners / Donorship</h2>
+          <p>We reach out to the Municipal Mayor, Barangay, DSWD/LGU, and potential sponsors for food and financial support.</p>
+          <p class="meta">Sample letters included on following slides.</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="content">
+          <h2>Letter — Mayor, Bansud</h2>
+          <p>Date: [Insert Date]</p>
+          <p>Hon. Ronaldo M. Morada<br/>Municipal Mayor, Bansud, Oriental Mindoro</p>
+          <p>Dear Honorable Mayor,</p>
+          <p>We respectfully request your support for our Feeding Program. Assistance may include rice, canned goods, or financial support. Thank you for your consideration.</p>
+          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President, NutriBo Organization<br/>09639946724</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="content">
+          <h2>Letter — Barangay / DSWD / LGU</h2>
+          <p>Date: [Insert Date]</p>
+          <p>To: The Office of the Department of Social Welfare and Development / Local Government Unit, Conrazon</p>
+          <p>We request partnership/donation for our Feeding Program. We ask for food supplies, financial support, or other resources to help make this program successful.</p>
+          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President, NutriBo Organization<br/>09639946724<br/>khimzaulda@gmail.com</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="content">
+          <h2>Letter — Sponsorship</h2>
+          <p>Date: [Insert Date]</p>
+          <p>Dear Sir/Ma’am,</p>
+          <p>We request your kind support for our Feeding Program. Any assistance such as food supplies or financial support will be greatly appreciated.</p>
+          <p>Respectfully yours,<br/><strong>Khim Joethel Zaulda</strong><br/>President, NutriBo Organization<br/>09639946724</p>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="content">
+          <h2>GForm for Donors</h2>
+          <p>Create a Google Form link for donors and paste it here:</p>
+          <p class="meta">[Insert Google Form URL]</p>
+        </div>
+      </section>
+
+      <!-- Action Plan -->
+      <section class="slide">
+        <div class="content">
+          <h2>Action Plan</h2>
+          <ul>
+            <li>Needs assessment with community leaders</li>
+            <li>Secure donations and partners</li>
+            <li>Procure supplies and organize logistics</li>
+            <li>Conduct feeding sessions and education</li>
+            <li>Collect feedback and evaluate impact</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Project Evaluation -->
+      <section class="slide">
+        <div class="content">
+          <h2>Project Evaluation</h2>
+          <p>Evaluation will focus on nutritional impact, participation, feedback from stakeholders, and organizational effectiveness to improve future programs.</p>
+        </div>
+      </section>
+
+      <!-- Final Narrative -->
+      <section class="slide">
+        <div class="content">
+          <h2>Final Narrative Report / Self Analysis</h2>
+          <p>Summarize activities, outcomes, lessons learned, and recommendations for future iterations of the program.</p>
+        </div>
+      </section>
+
+      <!-- Appreciation -->
+      <section class="slide">
+        <div class="content">
+          <h2>Appreciation of Donors</h2>
+          <p>We express sincere gratitude to all donors whose generosity helped provide nutritious meals and raise awareness about child nutrition in the community.</p>
+          <p class="meta">Thank you for helping build a healthier and brighter future.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="nav" aria-hidden="false">
+      <div class="arrow prev" id="prev" tabindex="0">◀</div>
+      <div class="arrow next" id="next" tabindex="0">▶</div>
+    </div>
+
+    <div class="controls">
+      <div class="dots" id="dots"></div>
+    </div>
+  </div>
+
+  <script>
+    const slidesEl = document.getElementById('slides');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsEl = document.getElementById('dots');
+    let idx = 0;
+
+    function render() {
+      slidesEl.style.transform = `translateX(${ -idx * 100 }%)`;
+      Array.from(dotsEl.children).forEach((d,i)=>d.classList.toggle('active', i===idx));
+      location.hash = `slide-${idx+1}`;
+    }
+
+    function makeDots(){
+      slides.forEach((s,i)=>{
+        const d = document.createElement('div');d.className='dot';d.setAttribute('aria-label',`Go to slide ${i+1}`);
+        d.addEventListener('click',()=>{idx=i;render()});
+        dotsEl.appendChild(d);
+      });
+    }
+
+    document.getElementById('prev').addEventListener('click',()=>{idx = Math.max(0, idx-1);render()});
+    document.getElementById('next').addEventListener('click',()=>{idx = Math.min(slides.length-1, idx+1);render()});
+    document.addEventListener('keydown', e=>{
+      if(e.key==='ArrowRight') idx = Math.min(slides.length-1, idx+1);
+      if(e.key==='ArrowLeft') idx = Math.max(0, idx-1);
+      render();
+    });
+
+    // initialize from hash if present
+    const h = location.hash.match(/slide-(\d+)/);
+    if(h){ const n = parseInt(h[1],10)-1; if(n>=0 && n<slides.length) idx = n }
+    makeDots(); render();
+
+    // touch support
+    let startX=null;
+    slidesEl.addEventListener('touchstart',e=>startX = e.changedTouches[0].clientX);
+    slidesEl.addEventListener('touchend',e=>{ if(startX===null) return; const dx = e.changedTouches[0].clientX - startX; if(dx>40) idx=Math.max(0,idx-1); else if(dx<-40) idx=Math.min(slides.length-1,idx+1); render(); startX=null });
+  </script>
+</body>
+</html>
