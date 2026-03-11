@@ -720,11 +720,15 @@
       const message = document.getElementById('message').value;
       
       const templateParams = {
-        from_name: name,
-        subject: subject,
+        name: name,
+        title: subject,
         message: message,
-        reply_to: name,
-        to_name: 'NutriBo Team'
+        email: 'pastoralyancelean@gmail.com',
+        time: new Date().toLocaleString('en-US', { 
+          timeZone: 'Asia/Manila',
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        })
       };
       
       console.log('Template Params:', templateParams);
