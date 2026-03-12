@@ -591,6 +591,109 @@ strong {
     color: var(--text);
     font-weight: 500;
     font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.team-member .name:hover {
+    color: var(--accent-light);
+}
+
+.team-member .photo-popup {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 100;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 10px;
+}
+
+.team-member .name:hover + .photo-popup {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.team-member .photo-popup img {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid var(--accent);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(245, 158, 11, 0.4),
+        inset 0 0 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+}
+
+.learn-more-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.learn-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-radius: 20px;
+    padding: 35px 25px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.learn-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.learn-card:hover::before {
+    opacity: 1;
+}
+
+.learn-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(245, 158, 11, 0.2);
+}
+
+.learn-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    transition: transform 0.4s ease;
+}
+
+.learn-card:hover .learn-icon {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.learn-card h3 {
+    font-size: 20px;
+    color: var(--accent-light);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.learn-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    text-align: center;
+    margin: 0;
 }
 
 .contact-form {
