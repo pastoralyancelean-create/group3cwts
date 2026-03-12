@@ -1,605 +1,153 @@
-:root {
-    --primary: #15803d;
-    --accent: #f59e0b;
-    --accent-light: #fcd34d;
-    --bg-dark: #12100e;
-    --bg-light: #1c1a17;
-    --card: rgba(255, 255, 255, 0.03);
-    --text: #f8fafc;
-    --text-dim: #cbd5e1;
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.classList.add('hidden');
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
+    }, 1200);
+});
+
+const EMAILJS_PUBLIC_KEY = 'r-OZq0GDLQ9hb2B51';
+const EMAILJS_SERVICE_ID = 'service_jrpotlg';
+const EMAILJS_TEMPLATE_ID = 'template_iuqcskk';
+
+(function () {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+})();
+
+const slidesEl = document.getElementById('slides');
+const slides = Array.from(document.querySelectorAll('.slide'));
+let idx = 0;
+
+function render() {
+    slidesEl.style.transform = `translateX(${-idx * 100}%)`;
+    slides.forEach((s, i) => {
+        if (i === idx) {
+            s.classList.add('active');
+        } else {
+            s.classList.remove('active');
+        }
+    });
+    location.hash = `slide-${idx + 1}`;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,
-body {
-    height: 100%;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg-dark);
-    color: var(--text);
-    overflow: hidden;
-}
-
-.loader {
-    position: fixed;
-    inset: 0;
-    background: var(--bg-dark);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.5s ease;
-}
-
-.loader.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.loader-circle {
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: expandCircle 1s cubic-bezier(0.65, 0, 0.15, 1) forwards;
-    animation-delay: 0.2s;
-}
-
-@keyframes expandCircle {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 1;
+document.getElementById('prev').addEventListener('click', () => {
+    if (idx > 0) {
+        idx--;
+        render();
     }
+});
 
-    100% {
-        width: 150vw;
-        height: 150vw;
-        opacity: 0;
+document.getElementById('next').addEventListener('click', () => {
+    if (idx < slides.length - 1) {
+        idx++;
+        render();
     }
-}
+});
 
-.deck {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-light) 100%);
-    opacity: 0;
-    animation: revealDeck 1s ease forwards;
-    animation-delay: 0.8s;
-}
+document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' && idx < slides.length - 1) {
+        idx++;
+        render();
+    }
+    if (e.key === 'ArrowLeft' && idx > 0) {
+        idx--;
+        render();
+    }
+});
 
-@keyframes revealDeck {
-    to {
-        opacity: 1;
+const h = location.hash.match(/slide-(\d+)/);
+if (h) {
+    const n = parseInt(h[1], 10) - 1;
+    if (n >= 0 && n < slides.length) {
+        idx = n;
     }
 }
 
-.slides {
-    display: flex;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.65, 0, 0.15, 1);
-}
+render();
 
-.slide {
-    min-width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 140px;
-    gap: 80px;
-}
-
-.content {
-    flex: 1;
-    max-width: 650px;
-}
-
-.slide h1,
-.slide h2,
-.slide p,
-.slide ul li,
-.slide .meta,
-.slide .photo,
-.slide .team-grid,
-.slide .contact-form {
-    opacity: 0;
-}
-
-.slide.active h1 {
-    animation: flyInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.2s;
-}
-
-.slide.active h2 {
-    animation: flyInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.3s;
-}
-
-.slide.active p:nth-of-type(1) {
-    animation: flyInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.4s;
-}
-
-.slide.active p:nth-of-type(2) {
-    animation: flyInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.5s;
-}
-
-.slide.active p:nth-of-type(3) {
-    animation: flyInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.6s;
-}
-
-.slide.active p:nth-of-type(4) {
-    animation: flyInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.7s;
-}
-
-.slide.active .meta {
-    animation: flyInBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.8s;
-}
-
-.slide.active ul li:nth-child(1) {
-    animation: flyInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.4s;
-}
-
-.slide.active ul li:nth-child(2) {
-    animation: flyInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.5s;
-}
-
-.slide.active ul li:nth-child(3) {
-    animation: flyInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.6s;
-}
-
-.slide.active ul li:nth-child(4) {
-    animation: flyInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.7s;
-}
-
-.slide.active ul li:nth-child(5) {
-    animation: flyInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.8s;
-}
-
-.slide.active ul li:nth-child(6) {
-    animation: flyInRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.9s;
-}
-
-.slide.active .photo {
-    animation: zoomInReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.5s;
-}
-
-.slide.active .team-grid {
-    animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.5s;
-}
-
-.slide.active .contact-form {
-    animation: flipInX 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    animation-delay: 0.5s;
-}
-
-@keyframes flyInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
+let startX = null;
+slidesEl.addEventListener('touchstart', e => {
+    startX = e.changedTouches[0].clientX;
+});
+slidesEl.addEventListener('touchend', e => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (dx > 50 && idx > 0) {
+        idx--;
+    } else if (dx < -50 && idx < slides.length - 1) {
+        idx++;
     }
+    render();
+    startX = null;
+});
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
 
-@keyframes flyInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
+if (contactForm) {
+    const submitBtn = contactForm.querySelector('.submit-btn');
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        formMessage.style.display = 'none';
+        formMessage.className = 'form-message';
 
-@keyframes flyInBottom {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
+        const name = document.getElementById('name').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        if (typeof emailjs === 'undefined') {
+            showFallback(name, subject, message);
+            return;
+        }
 
-@keyframes zoomInReveal {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateX(30px);
-    }
+        const templateParams = {
+            name: name,
+            title: subject,
+            message: message,
+            email: 'pastoralyancelean@gmail.com',
+            time: new Date().toLocaleString('en-US', {
+                timeZone: 'Asia/Manila',
+                dateStyle: 'medium',
+                timeStyle: 'short'
+            })
+        };
 
-    to {
-        opacity: 1;
-        transform: scale(1) translateX(0);
-    }
-}
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams).then(function (response) {
+            formMessage.textContent = '✓ Message sent successfully! We will get back to you soon.';
+            formMessage.className = 'form-message success';
+            formMessage.style.display = 'block';
+            contactForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
 
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        }, function (error) {
+            showFallback(name, subject, message);
+        });
+    });
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
+    function showFallback(name, subject, message) {
+        const emailBody = `Name: ${name}%0D%0A%0D%0ASubject: ${subject}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+        const mailtoLink = `mailto:pastoralyancelean@gmail.com?subject=${encodeURIComponent(subject)}&body=${emailBody}`;
 
-@keyframes flipInX {
-    from {
-        opacity: 0;
-        transform: perspective(600px) rotateX(60deg);
-    }
+        formMessage.innerHTML = `<p>Unable to send.</p><p><a href="${mailtoLink}" style="color: #f59e0b; text-decoration: underline;">Click here to send via your email client</a></p>`;
+        formMessage.className = 'form-message error';
+        formMessage.style.display = 'block';
 
-    to {
-        opacity: 1;
-        transform: perspective(600px) rotateX(0deg);
-    }
-}
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
 
-h1 {
-    font-size: clamp(40px, 5vw, 64px);
-    font-weight: 700;
-    margin-bottom: 24px;
-    background: linear-gradient(135deg, var(--accent-light), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1.1;
-    letter-spacing: -1px;
-}
-
-h2 {
-    font-size: clamp(30px, 3.5vw, 44px);
-    color: var(--text);
-    font-weight: 600;
-    margin-bottom: 24px;
-    line-height: 1.2;
-    position: relative;
-    display: inline-block;
-}
-
-h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 60px;
-    height: 4px;
-    background: var(--accent);
-    border-radius: 2px;
-}
-
-p {
-    font-size: clamp(16px, 1.8vw, 19px);
-    line-height: 1.8;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-    text-align: justify;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    font-size: clamp(16px, 1.8vw, 19px);
-    line-height: 1.7;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-    padding-left: 32px;
-    position: relative;
-}
-
-li:before {
-    content: '✦';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-size: 16px;
-}
-
-.meta {
-    color: var(--accent-light);
-    font-size: 16px;
-    margin-top: 20px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-strong {
-    color: var(--text);
-    font-weight: 600;
-}
-
-.photo {
-    width: 45vw;
-    max-width: 550px;
-    height: 65vh;
-    max-height: 600px;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
-    flex-shrink: 0;
-}
-
-.photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 6s ease;
-}
-
-.slide.active .photo:hover img {
-    transform: scale(1.08);
-}
-
-.nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 30px;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.arrow {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: rgba(245, 158, 11, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(245, 158, 11, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: auto;
-}
-
-.arrow:hover {
-    background: var(--accent);
-    color: var(--bg-dark);
-    transform: scale(1.15);
-    box-shadow: 0 0 24px rgba(245, 158, 11, 0.4);
-}
-
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-}
-
-.team-member {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 24px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.4s ease;
-}
-
-.team-member:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(245, 158, 11, 0.3);
-}
-
-.team-member img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--accent);
-    margin-bottom: 16px;
-    padding: 4px;
-}
-
-.team-member .role {
-    color: var(--accent-light);
-    font-weight: 600;
-    font-size: 12px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.team-member .name {
-    color: var(--text);
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.contact-form {
-    max-width: 500px;
-    margin: 0 auto;
-    background: var(--card);
-    padding: 40px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.form-group {
-    margin-bottom: 24px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 10px;
-    color: var(--accent-light);
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 16px 20px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.2);
-    color: var(--text);
-    font-size: 15px;
-    font-family: inherit;
-    transition: all 0.3s;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 18px;
-    background: var(--accent);
-    color: var(--bg-dark);
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.submit-btn:hover {
-    background: var(--accent-light);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(245, 158, 11, 0.2);
-}
-
-.form-message {
-    margin-top: 16px;
-    padding: 14px;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: 500;
-    display: none;
-    font-size: 14px;
-}
-
-.form-message.success {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: #34d399;
-    display: block;
-}
-
-.form-message.error {
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: #f87171;
-    display: block;
-}
-
-@media (max-width: 1024px) {
-    .slide {
-        flex-direction: column;
-        padding: 60px 40px;
-        gap: 40px;
-        text-align: center;
-    }
-
-    h2::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    p {
-        text-align: center;
-    }
-
-    li {
-        text-align: left;
-    }
-
-    .photo {
-        width: 100%;
-        max-width: 500px;
-        height: 40vh;
-    }
-
-    .content {
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav {
-        padding: 0 16px;
-    }
-}
-
-@media (max-width: 640px) {
-    .slide {
-        padding: 40px 24px;
-    }
-
-    h1 {
-        font-size: 32px;
-    }
-
-    h2 {
-        font-size: 26px;
-    }
-
-    .photo {
-        height: 30vh;
-        border-radius: 16px;
-    }
-
-    .arrow {
-        width: 44px;
-        height: 44px;
-        font-size: 16px;
-    }
-
-    .team-grid {
-        grid-template-columns: 1fr 1fr;
+        setTimeout(() => {
+            window.location.href = mailtoLink;
+        }, 2000);
     }
 }
