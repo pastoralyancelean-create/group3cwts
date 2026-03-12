@@ -85,6 +85,17 @@ slidesEl.addEventListener('touchend', e => {
     startX = null;
 });
 
+// Mouse move effect for slides
+slides.forEach(slide => {
+    slide.addEventListener('mousemove', (e) => {
+        const rect = slide.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        slide.style.setProperty('--mouse-x', `${x}%`);
+        slide.style.setProperty('--mouse-y', `${y}%`);
+    });
+});
+
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
