@@ -18,74 +18,8 @@ const EMAILJS_TEMPLATE_ID = 'template_iuqcskk';
     emailjs.init(EMAILJS_PUBLIC_KEY);
 })();
 
-const slidesEl = document.getElementById('slides');
-const slides = Array.from(document.querySelectorAll('.slide'));
-let idx = 0;
-
-function render() {
-    slidesEl.style.transform = `translateX(${-idx * 100}%)`;
-    slides.forEach((s, i) => {
-        if (i === idx) {
-            s.classList.add('active');
-        } else {
-            s.classList.remove('active');
-        }
-    });
-    location.hash = `slide-${idx + 1}`;
-}
-
-document.getElementById('prev').addEventListener('click', () => {
-    if (idx > 0) {
-        idx--;
-        render();
-    }
-});
-
-document.getElementById('next').addEventListener('click', () => {
-    if (idx < slides.length - 1) {
-        idx++;
-        render();
-    }
-});
-
-document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' && idx < slides.length - 1) {
-        idx++;
-        render();
-    }
-    if (e.key === 'ArrowLeft' && idx > 0) {
-        idx--;
-        render();
-    }
-});
-
-const h = location.hash.match(/slide-(\d+)/);
-if (h) {
-    const n = parseInt(h[1], 10) - 1;
-    if (n >= 0 && n < slides.length) {
-        idx = n;
-    }
-}
-
-render();
-
-let startX = null;
-slidesEl.addEventListener('touchstart', e => {
-    startX = e.changedTouches[0].clientX;
-});
-slidesEl.addEventListener('touchend', e => {
-    if (startX === null) return;
-    const dx = e.changedTouches[0].clientX - startX;
-    if (dx > 50 && idx > 0) {
-        idx--;
-    } else if (dx < -50 && idx < slides.length - 1) {
-        idx++;
-    }
-    render();
-    startX = null;
-});
-
 // Mouse move effect for slides
+const slides = Array.from(document.querySelectorAll('.slide'));
 slides.forEach(slide => {
     slide.addEventListener('mousemove', (e) => {
         const rect = slide.getBoundingClientRect();
